@@ -14,3 +14,4 @@ public class Name {
 
     // Getters and setters
 }
+
