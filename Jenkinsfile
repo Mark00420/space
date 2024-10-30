@@ -1,28 +1,21 @@
 pipeline {
     agent any
     environment {
-        DOCKER_REGISTRY = 'your-docker-registry'
-        DOCKER_IMAGE = 'your-image-name'
         KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-credentials'
     }
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Mark00420/space.git'
+                sh 'ls -al'  // To confirm files are in place
             }
         }
-        stage('Build') {
+        stage('Build and Push') {
             steps {
                 script {
-                    docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest")
-                }
-            }
-        }
-        stage('Push') {
-            steps {
-                script {
+                    dockerCompose = docker.build("your-docker-compose-service")
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                        docker.image("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest").push()
+                        dockerCompose.push()
                     }
                 }
             }
