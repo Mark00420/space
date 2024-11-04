@@ -18,8 +18,16 @@ pipeline {
                 script {
                     docker.build("your-dockerhub-username/frontend:latest", "./frontend")
                     docker.build("your-dockerhub-username/backend:latest", "./backend")
-                    docker.push("your-dockerhub-username/frontend:latest")
-                    docker.push("your-dockerhub-username/backend:latest")
+                    // Approve the use of docker.push
+                    script {
+                        if (isUnix()) {
+                            sh 'docker push your-dockerhub-username/frontend:latest'
+                            sh 'docker push your-dockerhub-username/backend:latest'
+                        } else {
+                            bat 'docker push your-dockerhub-username/frontend:latest'
+                            bat 'docker push your-dockerhub-username/backend:latest'
+                        }
+                    }
                 }
             }
         }
