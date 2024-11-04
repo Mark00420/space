@@ -21,7 +21,7 @@ services:
         condition: on-failure
 
   backend:
-    build: ./backend
+    image: mark00420/backend:latest
     ports:
       - "8082:8080"
     environment:
@@ -39,7 +39,7 @@ services:
         condition: on-failure
 
   frontend:
-    build: ./frontend
+    image: mark00420/frontend:latest
     ports:
       - "3000:80"
     depends_on:
