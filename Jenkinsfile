@@ -2,7 +2,6 @@ pipeline {
     agent any
     environment {
         GIT_CREDENTIALS_ID = 'github-credentials'
-        DOCKER_CREDENTIALS_ID = 'docker-credentials'
         KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-credentials'
     }
     triggers {
@@ -17,18 +16,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.build("your-dockerhub-username/frontend:latest", "./frontend")
-                    docker.build("your-dockerhub-username/backend:latest", "./backend")
-                }
-            }
-        }
-        stage('Push') {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: env.DOCKER_CREDENTIALS_ID, url: 'https://index.docker.io/v1/') {
-                        docker.image("your-dockerhub-username/frontend:latest").push()
-                        docker.image("your-dockerhub-username/backend:latest").push()
-                    }
+                    docker.build("mark00420/frontend:latest", "./frontend")
+                    docker.build("mark00420/backend:latest", "./backend")
                 }
             }
         }
