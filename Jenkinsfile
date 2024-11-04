@@ -12,8 +12,8 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 script {
-                    // Pull images and run containers locally
-                    sh '''
+                    // Pull images and run containers locally on Windows
+                    bat '''
                     docker-compose down
                     docker-compose build
                     docker-compose up -d
