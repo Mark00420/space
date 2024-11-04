@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-credentials'
         PATH = "${env.PATH};C:\\Program Files\\Docker\\Docker\\resources\\bin"
     }
     triggers {
