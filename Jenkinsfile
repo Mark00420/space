@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         GIT_CREDENTIALS_ID = 'github-credentials'
+        DOCKER_CREDENTIALS_ID = 'docker-credentials'
         KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-credentials'
     }
     triggers {
@@ -13,20 +14,20 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/Mark00420/space.git', credentialsId: env.GIT_CREDENTIALS_ID]]])
             }
         }
-        stage('Build and Push') {
+        stage('Build') {
             steps {
                 script {
                     docker.build("your-dockerhub-username/frontend:latest", "./frontend")
                     docker.build("your-dockerhub-username/backend:latest", "./backend")
-                    // Approve the use of docker.push
-                    script {
-                        if (isUnix()) {
-                            sh 'docker push your-dockerhub-username/frontend:latest'
-                            sh 'docker push your-dockerhub-username/backend:latest'
-                        } else {
-                            bat 'docker push your-dockerhub-username/frontend:latest'
-                            bat 'docker push your-dockerhub-username/backend:latest'
-                        }
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: env.DOCKER_CREDENTIALS_ID, url: 'https://index.docker.io/v1/') {
+                        docker.image("your-dockerhub-username/frontend:latest").push()
+                        docker.image("your-dockerhub-username/backend:latest").push()
                     }
                 }
             }
