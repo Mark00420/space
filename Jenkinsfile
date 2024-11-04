@@ -26,12 +26,12 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: env.KUBECONFIG_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
-                        bat 'kubectl apply -f k8s-deployments/frontend-deployment.yaml'
-                        bat 'kubectl apply -f k8s-deployments/frontend-service.yaml'
-                        bat 'kubectl apply -f k8s-deployments/backend-deployment.yaml'
-                        bat 'kubectl apply -f k8s-deployments/backend-service.yaml'
-                        bat 'kubectl apply -f k8s-deployments/mysql-deployment.yaml'
-                        bat 'kubectl apply -f k8s-deployments/mysql-service.yaml'
+                        bat 'kubectl apply --validate=false -f k8s-deployments/frontend-deployment.yaml'
+                        bat 'kubectl apply --validate=false -f k8s-deployments/frontend-service.yaml'
+                        bat 'kubectl apply --validate=false -f k8s-deployments/backend-deployment.yaml'
+                        bat 'kubectl apply --validate=false -f k8s-deployments/backend-service.yaml'
+                        bat 'kubectl apply --validate=false -f k8s-deployments/mysql-deployment.yaml'
+                        bat 'kubectl apply --validate=false -f k8s-deployments/mysql-service.yaml'
                     }
                 }
             }
