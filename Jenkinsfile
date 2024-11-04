@@ -3,7 +3,7 @@ pipeline {
     environment {
         GIT_CREDENTIALS_ID = 'space'
         KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-credentials'
-        PATH = "${env.PATH};C:\ProgramData\chocolatey\bin\kubectl.exe"
+        PATH = "${env.PATH};C:\\Program Files\\Docker\\Docker\\resources\\bin"
     }
     triggers {
         githubPush()
