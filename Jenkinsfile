@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-credentials'
+        PATH = "${env.PATH};C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe"
     }
     triggers {
         githubPush()
@@ -33,7 +34,7 @@ pipeline {
         stage('Deploy to Swarm') {
             steps {
                 script {
-                    sh 'docker stack deploy -c docker-compose.yml my-stack'
+                    bat 'docker stack deploy -c docker-compose.yml my-stack'
                 }
             }
         }
