@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-credentials'
-        PATH = "${env.PATH};C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe"
+        PATH = "${env.PATH};C:\\Program Files\\Docker\\Docker\\resources\\bin"
     }
     triggers {
         githubPush()
@@ -21,20 +21,10 @@ pipeline {
                 }
             }
         }
-        stage('Push') {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: DOCKER_CREDENTIALS_ID, url: 'https://index.docker.io/v1/') {
-                        docker.image("mark00420/frontend:latest").push()
-                        docker.image("mark00420/backend:latest").push()
-                    }
-                }
-            }
-        }
         stage('Deploy to Swarm') {
             steps {
                 script {
-                    bat 'docker stack deploy -c docker-compose.yml my-stack'
+                    bat 'docker stack deploy -c C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\space\\docker-compose.yml my-stack'
                 }
             }
         }
