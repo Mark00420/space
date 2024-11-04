@@ -3,7 +3,7 @@ pipeline {
     environment {
         GIT_CREDENTIALS_ID = 'space'
         KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-credentials'
-        PATH = "${env.PATH};C:\\Program Files\\Docker\\Docker\\resources\\bin"
+        PATH = "${env.PATH};C:\\ProgramData\\chocolatey\\bin\\kubectl.exe"
     }
     triggers {
         githubPush()
@@ -26,12 +26,12 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: env.KUBECONFIG_CREDENTIALS_ID, variable: 'KUBECONFIG')]) {
-                        sh 'kubectl apply -f k8s-deployments/frontend-deployment.yaml'
-                        sh 'kubectl apply -f k8s-deployments/frontend-service.yaml'
-                        sh 'kubectl apply -f k8s-deployments/backend-deployment.yaml'
-                        sh 'kubectl apply -f k8s-deployments/backend-service.yaml'
-                        sh 'kubectl apply -f k8s-deployments/mysql-deployment.yaml'
-                        sh 'kubectl apply -f k8s-deployments/mysql-service.yaml'
+                        bat 'kubectl apply -f k8s-deployments/frontend-deployment.yaml'
+                        bat 'kubectl apply -f k8s-deployments/frontend-service.yaml'
+                        bat 'kubectl apply -f k8s-deployments/backend-deployment.yaml'
+                        bat 'kubectl apply -f k8s-deployments/backend-service.yaml'
+                        bat 'kubectl apply -f k8s-deployments/mysql-deployment.yaml'
+                        bat 'kubectl apply -f k8s-deployments/mysql-service.yaml'
                     }
                 }
             }
