@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        GIT_CREDENTIALS_ID = 'github-credentials'
+        GIT_CREDENTIALS_ID = 'space'
         KUBECONFIG_CREDENTIALS_ID = 'kubeconfig-credentials'
         PATH = "${env.PATH};C:\ProgramData\chocolatey\bin\kubectl.exe"
     }
