@@ -1,10 +1,12 @@
 pipeline {
     agent any
-
+    environment {
+        GIT_CREDENTIALS_ID = 'github-credentials'
+    }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/your-repo.git'
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Mark00420/space.git', credentialsId: env.GIT_CREDENTIALS_ID]]])
             }
         }
         stage('Build and Deploy') {
