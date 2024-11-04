@@ -3,10 +3,13 @@ pipeline {
     environment {
         GIT_CREDENTIALS_ID = 'github-credentials'
     }
+    triggers {
+        githubPush()
+    }
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Mark00420/space.git', credentialsId: env.GIT_CREDENTIALS_ID]]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/Mark00420/space.git', credentialsId: env.GIT_CREDENTIALS_ID]]])
             }
         }
         stage('Build and Deploy') {
